@@ -1,5 +1,5 @@
 const fsMock = require('fs-extra');
-const simpleGitMock = require('simple-git/promise');
+const simpleGitMock = require('simple-git');
 const git = require('../git');
 
 const helpersMock = require('../../utils/helpers');
