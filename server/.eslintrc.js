@@ -5,7 +5,6 @@ module.exports = {
       browser: true,
       mocha: true,
     },
-    extends: 'airbnb',
     root: true,
     parserOptions: {
       ecmaVersion: 2018,
