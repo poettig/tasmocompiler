@@ -1,41 +1,18 @@
 const shell = require('shelljs');
 const fs = require('fs-extra');
-const path = require('path');
-const _ = require('lodash');
 const debug = require('debug')('compile');
 
 const { switchToBranch } = require('../git/git');
 const {
   tasmotaRepo,
   userConfigOvewrite,
-  tasmotaVersionFile,
   userPlatformioOverrideIni,
   tasmotaInoFile,
 } = require('../config/config');
 
-const getTasmotaVersion = () => {
-  const fileExists = fs.pathExistsSync(tasmotaVersionFile);
-  const versRegexp = /const uint32_t VERSION = (.*);/gm;
-
-  if (fileExists) {
-    const file = fs.readFileSync(tasmotaVersionFile, {
-      encoding: 'utf8',
-      flag: 'r',
-    });
-    const match = [...file.matchAll(versRegexp)];
-    if (match[0]) {
-      return parseInt(match[0][1]);
-    } else {
-      throw new Error(`Cannot find Tasmota version in ${tasmotaVersionFile}.`);
-    }
-  } else {
-    throw new Error(`${tasmotaVersionFile} does not exists.`);
-  }
-};
-
 const getImageName = (socket, name) => {
   const fileExists = fs.pathExistsSync(tasmotaInoFile);
-  const imageNameRegexp = /char image_name\[(.*)\];/gm;
+  const imageNameRegexp = /char image_name\[(.*)];/gm;
   const codeImageStr = `TasmoCompiler-${name}`;
   let retValue = '';
   let messageToEmit = `${tasmotaInoFile} does not exists. The CODE_IMG_STR will not be set.\n`;
@@ -52,10 +29,12 @@ const getImageName = (socket, name) => {
     if (match[0]) {
       // take care of space for null termination
       const maxLength = parseInt(match[0][1]) - 1;
-      messageToEmit = `codeImageStr(${codeImageStr}[${codeImageStr.length}]) length exceeded image_name[${maxLength}] limit.\n`;
+      messageToEmit =
+        `codeImageStr(${codeImageStr}[${codeImageStr.length}]) length exceeded image_name[${maxLength}] limit.\n`;
 
       if (codeImageStr.length <= maxLength) {
-        retValue = `#ifdef CODE_IMAGE_STR\n  #undef CODE_IMAGE_STR\n#endif\n#define CODE_IMAGE_STR "${codeImageStr}"\n\n`;
+        retValue = '#ifdef CODE_IMAGE_STR\n  #undef CODE_IMAGE_STR\n#endif\n'
+        retValue += `#define CODE_IMAGE_STR "${codeImageStr}"\n\n`;
         messageToEmit = '';
       }
     } // findImageName
@@ -239,7 +218,7 @@ const compileCode = async (socket, data) => {
       async: true,
     });
 
-    child.on('exit', (code, signal) => {
+    child.on('exit', (code) => {
       const message = `Finished. Exit code: ${code}.\n`;
       socket.emit('message', outputMessages.join(''));
       socket.emit('message', message);

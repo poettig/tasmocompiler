@@ -1,14 +1,31 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import Typography from '@material-ui/core/Typography';
 import { FormattedMessage } from 'react-intl';
 
 import NextButton from './NextButton';
+import {Button, Step, StepContent} from "@mui/material";
+import {ActionsContainer, ProgressIndicator, StyledStepLabel, Wrapper} from "../../styles/styles";
+
+function Typography(props) { return null;
+}
+
+Typography.propTypes = {children: PropTypes.node};
+
+function CircularProgress(props) {
+  return null;
+}
+
+CircularProgress.propTypes = {
+  size: PropTypes.number,
+  className: PropTypes.shape({
+    color: PropTypes.string,
+    top: PropTypes.string,
+    left: PropTypes.string,
+    position: PropTypes.string,
+    marginTop: PropTypes.number,
+    marginLeft: PropTypes.number
+  })
+};
 
 class SourceStep extends Component {
   constructor(props) {
@@ -81,9 +98,9 @@ class SourceStep extends Component {
 
     return (
       <Step {...other}>
-        <StepLabel error={message.length > 0 && other.active} classes={{label: classes.stepLabel}}>
+        <StyledStepLabel error={message.length > 0 && other.active}>
           <FormattedMessage id="stepSourceTitle" />
-        </StepLabel>
+        </StyledStepLabel>
         <StepContent>
           {isRepo ? (
             <Typography>
@@ -94,14 +111,13 @@ class SourceStep extends Component {
               <FormattedMessage id="stepSourceDescDownload" />
             </Typography>
           )}
-          <div className={classes.actionsContainer}>
-            <div className={classes.wrapper}>
+          <ActionsContainer>
+            <Wrapper>
               <Button
                 disabled={cloning || gettingTags}
                 variant="contained"
                 color="primary"
                 onClick={this.handleClonePull}
-                // className={classes.button}
               >
                 {isRepo ? (
                   <FormattedMessage id="btnRefreshSrc" />
@@ -110,25 +126,23 @@ class SourceStep extends Component {
                 )}
               </Button>
               {cloning && (
-                <CircularProgress
+                <ProgressIndicator
                   size={24}
-                  className={classes.buttonProgress}
                 />
               )}
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <NextButton
                 disabled={!isRepo || cloning || gettingTags}
                 onClick={this.handleNext}
               />
               {gettingTags && (
-                <CircularProgress
+                <ProgressIndicator
                   size={24}
-                  className={classes.buttonProgress}
                 />
               )}
-            </div>
-          </div>
+            </Wrapper>
+          </ActionsContainer>
           {message && (
             <Typography color="error" variant="subtitle1">
               Error:
@@ -142,7 +156,6 @@ class SourceStep extends Component {
 }
 
 SourceStep.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   nextHandler: PropTypes.func.isRequired,
 };
 

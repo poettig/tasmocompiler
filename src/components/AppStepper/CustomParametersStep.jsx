@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import TextField from '@material-ui/core/TextField';
-import Typography from '@material-ui/core/Typography';
 
 import NextButton from './NextButton';
 import BackButton from './BackButton';
 import { FormattedMessage } from 'react-intl';
+import {Step, StepContent, Typography} from "@mui/material";
+import {ActionsContainer, MultiTextField, StyledStepLabel, Wrapper} from "../../styles/styles";
 
 class CustomParametersStep extends Component {
   constructor(props) {
@@ -60,9 +57,9 @@ class CustomParametersStep extends Component {
 
     return (
       <Step {...other}>
-        <StepLabel classes={{label: classes.stepLabel}}>
+        <StyledStepLabel>
           <FormattedMessage id="stepCustomParamsTitle" />
-        </StepLabel>
+        </StyledStepLabel>
         <StepContent>
           <Typography>
             <FormattedMessage
@@ -71,9 +68,8 @@ class CustomParametersStep extends Component {
             />
           </Typography>
           <form noValidate autoComplete="off">
-            <div className={classes.actionsContainer}>
-              <TextField
-                // id='reg_customParams'
+            <ActionsContainer>
+              <MultiTextField
                 placeholder={placeholder}
                 name="customParams"
                 label={<FormattedMessage id="stepCustomParamsTitle" />}
@@ -81,26 +77,21 @@ class CustomParametersStep extends Component {
                 multiline
                 minRows={9}
                 maxRows={9}
-                className={classes.multiTextField}
                 value={customParams}
                 onChange={this.handleChange}
                 margin="normal"
-                InputProps={{
-                  classes: {
-                    input: classes.inputFont,
-                  },
-                }}
+                variant="standard"
               />
-            </div>
+            </ActionsContainer>
           </form>
-          <div className={classes.actionsContainer}>
-            <div className={classes.wrapper}>
+          <ActionsContainer>
+            <Wrapper>
               <BackButton disabled={false} onClick={this.handleBack} />
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <NextButton disabled={false} onClick={this.handleNext} />
-            </div>
-          </div>
+            </Wrapper>
+          </ActionsContainer>
         </StepContent>
       </Step>
     );
@@ -108,7 +99,6 @@ class CustomParametersStep extends Component {
 }
 
 CustomParametersStep.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   pstate: PropTypes.oneOfType([PropTypes.object]).isRequired,
   nextHandler: PropTypes.func.isRequired,
   backHandler: PropTypes.func.isRequired,

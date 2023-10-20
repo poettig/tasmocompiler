@@ -16,7 +16,7 @@ describe('git.js tests', () => {
       helpersMock.getTcVersion.mockClear();
     });
 
-    it('should return false when repo directory is not present', async (done) => {
+    it('should return false when repo directory is not present', async () => {
       fsMock.__setFsStatReject(true);
       const isAvailable = await git.isGitRepoAvailable();
 
@@ -24,10 +24,9 @@ describe('git.js tests', () => {
       expect(fsMock.stat).toBeCalledTimes(1);
       expect(fsMock.stat).toBeCalledWith(tasmotaRepo);
       expect(simpleGitMock().checkIsRepo).not.toBeCalled();
-      done();
     });
 
-    it('should return true when repo directory is a git repository', async (done) => {
+    it('should return true when repo directory is a git repository', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitIsRepoRet(true);
       const isAvailable = await git.isGitRepoAvailable();
@@ -36,10 +35,9 @@ describe('git.js tests', () => {
       expect(fsMock.stat).toBeCalledTimes(1);
       expect(fsMock.stat).toBeCalledWith(tasmotaRepo);
       expect(simpleGitMock().checkIsRepo).toBeCalledTimes(1);
-      done();
     });
 
-    it('should return false when repo directory is NOT git repo and directory is succesfully deleted', async (done) => {
+    it('should return false when repo directory is NOT git repo and directory is succesfully deleted', async () => {
       fsMock.__setFsStatReject(false);
       fsMock.__setFsRemoveReject(false);
       simpleGitMock.__setGitIsRepoRet(false);
@@ -51,10 +49,9 @@ describe('git.js tests', () => {
       expect(fsMock.remove).toBeCalledTimes(1);
       expect(fsMock.remove).toBeCalledWith(tasmotaRepo);
       expect(simpleGitMock().checkIsRepo).toBeCalledTimes(1);
-      done();
     });
 
-    it('should throw an error when non git repo directory cannot be removed', async (done) => {
+    it('should throw an error when non git repo directory cannot be removed', async () => {
       fsMock.__setFsStatReject(false);
       fsMock.__setFsRemoveReject(true);
       simpleGitMock.__setGitIsRepoRet(false);
@@ -71,7 +68,6 @@ describe('git.js tests', () => {
       expect(fsMock.remove).toBeCalledTimes(1);
       expect(fsMock.remove).toBeCalledWith(tasmotaRepo);
       expect(simpleGitMock().checkIsRepo).toBeCalledTimes(1);
-      done();
     });
   });
 
@@ -83,7 +79,7 @@ describe('git.js tests', () => {
       simpleGitMock().tags.mockClear();
       helpersMock.getTcVersion.mockClear();
     });
-    it('should return only development tag when TC version is development', async (done) => {
+    it('should return only development tag when TC version is development', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitIsRepoRet(true);
       simpleGitMock.__setGitTagsReject(false);
@@ -94,10 +90,9 @@ describe('git.js tests', () => {
       expect(tags).toEqual(expect.arrayContaining(['development']));
       expect(simpleGitMock().tags).toBeCalledTimes(0);
       expect(helpersMock.getTcVersion).toBeCalledTimes(1);
-      done();
     });
 
-    it('should return filtered repository tags when TC version is NOT development', async (done) => {
+    it('should return filtered repository tags when TC version is NOT development', async () => {
       simpleGitMock.__setRepoTags([minVersion]);
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitIsRepoRet(true);
@@ -108,10 +103,9 @@ describe('git.js tests', () => {
       expect(tags).toHaveLength(1);
       expect(tags).toEqual(expect.arrayContaining([minVersion]));
       expect(simpleGitMock().tags).toBeCalledTimes(1);
-      done();
     });
 
-    it('should throw an error when tags cannot be retrieved because directory is not git repo', async (done) => {
+    it('should throw an error when tags cannot be retrieved because directory is not git repo', async () => {
       fsMock.__setFsStatReject(true);
       let error;
       try {
@@ -121,10 +115,9 @@ describe('git.js tests', () => {
       }
 
       expect(error.message).toMatch(/unable to get/i);
-      done();
     });
 
-    it('should throw an error when git.tags function fails', async (done) => {
+    it('should throw an error when git.tags function fails', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitIsRepoRet(true);
       simpleGitMock.__setGitTagsReject(true);
@@ -137,7 +130,6 @@ describe('git.js tests', () => {
       }
 
       expect(error.message).toMatch(/unable to get/i);
-      done();
     });
   });
 
@@ -156,7 +148,7 @@ describe('git.js tests', () => {
       helpersMock.getTcVersion.mockClear();
     });
 
-    it('should throw an error on reset branch fail', async (done) => {
+    it('should throw an error on reset branch fail', async () => {
       let error;
       simpleGitMock.__setGitResetReject(true);
       try {
@@ -168,10 +160,9 @@ describe('git.js tests', () => {
       expect(error.message).toMatch(/unable to reset/i);
       expect(simpleGitMock().reset).toBeCalledTimes(1);
       expect(simpleGitMock().reset).toBeCalledWith('hard');
-      done();
     });
 
-    it('should throw an error on clean fail', async (done) => {
+    it('should throw an error on clean fail', async () => {
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(true);
       let error;
@@ -184,10 +175,9 @@ describe('git.js tests', () => {
 
       expect(error.message).toMatch(/unable to clean/i);
       expect(simpleGitMock().clean).toBeCalledTimes(1);
-      done();
     });
 
-    it('should throw an error on branchLocal fail', async (done) => {
+    it('should throw an error on branchLocal fail', async () => {
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
       let error;
@@ -198,10 +188,9 @@ describe('git.js tests', () => {
         error = e;
       }
       expect(error.message).toMatch(/cannot get the list of local branches/i);
-      done();
     });
 
-    it('should throw an error on checkout to remote branch fail', async (done) => {
+    it('should throw an error on checkout to remote branch fail', async () => {
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
       simpleGitMock.__setGitBranchLocalReject(false);
@@ -216,10 +205,9 @@ describe('git.js tests', () => {
 
       expect(error.message).toMatch(/switching to branch/i);
       expect(simpleGitMock().checkoutBranch).toBeCalledTimes(1);
-      done();
     });
 
-    it('should checkout to remote development branch and return branch name', async (done) => {
+    it('should checkout to remote development branch and return branch name', async () => {
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
       simpleGitMock.__setGitBranchLocalReject(false);
@@ -230,11 +218,9 @@ describe('git.js tests', () => {
       expect(branch).toBe(edgeBranch);
       expect(simpleGitMock().checkoutBranch).toBeCalledTimes(1);
       expect(simpleGitMock().checkoutBranch).toBeCalledWith(edgeBranch, edgeBranch);
-
-      done();
     });
 
-    it('should checkout to remote minVersion branch and return branch name', async (done) => {
+    it('should checkout to remote minVersion branch and return branch name', async () => {
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
       simpleGitMock.__setGitBranchLocalReject(false);
@@ -245,11 +231,9 @@ describe('git.js tests', () => {
       expect(branch).toBe(minVersion);
       expect(simpleGitMock().checkoutBranch).toBeCalledTimes(1);
       expect(simpleGitMock().checkoutBranch).toBeCalledWith(minVersion, minVersion);
-
-      done();
     });
 
-    it('should throw an error on checkout to local branch fail', async (done) => {
+    it('should throw an error on checkout to local branch fail', async () => {
       simpleGitMock.__setLocalBranches({ development: edgeBranch });
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
@@ -265,10 +249,9 @@ describe('git.js tests', () => {
 
       expect(simpleGitMock().checkout).toBeCalledTimes(1);
       expect(error.message).toMatch(/switching to branch/i);
-      done();
     });
 
-    it('should checkout to local branch and return branch name', async (done) => {
+    it('should checkout to local branch and return branch name', async () => {
       simpleGitMock.__setLocalBranches({ development: edgeBranch });
       simpleGitMock.__setGitResetReject(false);
       simpleGitMock.__setGitCleanReject(false);
@@ -279,7 +262,6 @@ describe('git.js tests', () => {
 
       expect(branch).toBe(edgeBranch);
       expect(simpleGitMock().checkout).toBeCalledTimes(1);
-      done();
     });
   });
 
@@ -289,7 +271,7 @@ describe('git.js tests', () => {
       helpersMock.getTcVersion.mockClear();
     });
 
-    it('should return development tag if Tasmota repo is already there', async (done) => {
+    it('should return development tag if Tasmota repo is already there', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitTagsReject(false);
       simpleGitMock.__setRepoTags([edgeBranch]);
@@ -298,10 +280,9 @@ describe('git.js tests', () => {
 
       expect(tags).toHaveLength(1);
       expect(tags).toEqual(expect.arrayContaining([edgeBranch]));
-      done();
     });
 
-    it('should return minVersion tag if Tasmota repo is already there', async (done) => {
+    it('should return minVersion tag if Tasmota repo is already there', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitTagsReject(false);
       simpleGitMock.__setRepoTags([minVersion]);
@@ -310,10 +291,9 @@ describe('git.js tests', () => {
 
       expect(tags).toHaveLength(1);
       expect(tags).toEqual(expect.arrayContaining([minVersion]));
-      done();
     });
 
-    it('should throw an error on clone fail', async (done) => {
+    it('should throw an error on clone fail', async () => {
       fsMock.__setFsStatReject(true);
       simpleGitMock.__setGitCloneReject(true);
       let error;
@@ -326,10 +306,9 @@ describe('git.js tests', () => {
       expect(error.message).toMatch(/unable to clone/i);
       expect(simpleGitMock().clone).toHaveBeenCalledTimes(1);
       expect(simpleGitMock().clone).toHaveBeenCalledWith(githubRepo, tasmotaRepo);
-      done();
     });
 
-    it('should clone Tasmota repo and return tags when repo is not available locally', async (done) => {
+    it('should clone Tasmota repo and return tags when repo is not available locally', async () => {
       // first for isRepoAvailable at the start of cloneRepo
       // second for getRepoTags called at the end of cloneRepo
       fsMock.stat.mockReturnValueOnce(Promise.reject()).mockReturnValueOnce(Promise.resolve());
@@ -342,7 +321,6 @@ describe('git.js tests', () => {
       expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
       expect(simpleGitMock().clone).toHaveBeenCalledTimes(1);
       expect(simpleGitMock().clone).toHaveBeenCalledWith(githubRepo, tasmotaRepo);
-      done();
     });
   });
   describe('testing pullRepo', () => {
@@ -351,7 +329,7 @@ describe('git.js tests', () => {
       helpersMock.getTcVersion.mockClear();
     });
 
-    it('should clone the repo if there is no repo available', async (done) => {
+    it('should clone the repo if there is no repo available', async () => {
       fsMock.__setFsStatReject(false);
       // first for isRepoAvailable at the start of pullRepo
       fsMock.stat.mockReturnValueOnce(Promise.reject());
@@ -363,10 +341,9 @@ describe('git.js tests', () => {
       expect(tags).toHaveLength(2);
       expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
       expect(simpleGitMock().pull).toBeCalledTimes(0);
-      done();
     });
 
-    it('should throw an error on pull fail', async (done) => {
+    it('should throw an error on pull fail', async () => {
       fsMock.__setFsStatReject(false);
       let error;
       try {
@@ -377,10 +354,9 @@ describe('git.js tests', () => {
 
       expect(error.message).toMatch(/unable to pull/i);
       expect(simpleGitMock().pull).toBeCalledTimes(1);
-      done();
     });
 
-    it('should pull latest changes and return repo tags', async (done) => {
+    it('should pull latest changes and return repo tags', async () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitPullReject(false);
       simpleGitMock.__setGitTagsReject(false);
@@ -390,7 +366,6 @@ describe('git.js tests', () => {
       expect(tags).toHaveLength(2);
       expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
       expect(simpleGitMock().pull).toBeCalledTimes(1);
-      done();
     });
   });
 });

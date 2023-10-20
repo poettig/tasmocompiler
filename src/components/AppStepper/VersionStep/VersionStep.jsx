@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Typography from '@material-ui/core/Typography';
-import CircularProgress from '@material-ui/core/CircularProgress';
 import { FormattedMessage } from 'react-intl';
 
 import BackButton from '../BackButton';
 import CompileButton from '../CompileButton';
 import VersionSelector from './VersionSelector';
 import { tasmotaGUILanguages, preselectedTasmotaGUILanguage } from './Variables/Languages';
+import {Step, StepContent, Typography} from "@mui/material";
+import {ActionsContainer, ActionsForm, ProgressIndicator, StyledStepLabel, Wrapper} from "../../../styles/styles";
 
 class VersionStep extends Component {
   constructor(props) {
@@ -57,14 +54,14 @@ class VersionStep extends Component {
 
     return (
       <Step {...other}>
-        <StepLabel error={message.length > 0 && other.active} classes={{ label: classes.stepLabel }}>
+        <StyledStepLabel error={message.length > 0 && other.active}>
           <FormattedMessage id='stepVersionTitle' />
-        </StepLabel>
+        </StyledStepLabel>
         <StepContent>
           <Typography>
             <FormattedMessage id='stepVersionDesc' />
           </Typography>
-          <form className={classes.actionsContainer} autoComplete='off'>
+          <ActionsForm autoComplete='off'>
             <VersionSelector
               items={repoTags}
               name='tasmotaVersion'
@@ -82,16 +79,16 @@ class VersionStep extends Component {
               classes={classes}
               preselectedTasmotaGUILanguage={preselectedTasmotaGUILanguage}
             />
-          </form>
-          <div className={classes.actionsContainer}>
-            <div className={classes.wrapper}>
+          </ActionsForm>
+          <ActionsContainer>
+            <Wrapper>
               <BackButton disabled={compiling} onClick={this.handleBack} />
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <CompileButton disabled={compiling} onClick={this.handleCompile} />
-              {compiling && <CircularProgress size={24} className={classes.buttonProgress} />}
-            </div>
-          </div>
+              {compiling && <ProgressIndicator size={24} />}
+            </Wrapper>
+          </ActionsContainer>
           {message && (
             <Typography color='error' variant='subtitle1'>
               Error:
@@ -105,7 +102,6 @@ class VersionStep extends Component {
 }
 
 VersionStep.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   repoTags: PropTypes.oneOfType([PropTypes.array]).isRequired,
   compiling: PropTypes.bool.isRequired,
   compileHandler: PropTypes.func.isRequired,

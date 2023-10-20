@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import { FormattedMessage } from 'react-intl';
+import {DonationImage, DonationLinks, DownloadButton, IconRight, Link, LinkTypography} from "../../styles/styles";
+
+function Typography(props) {
+  return null;
+}
+
+Typography.propTypes = {
+  variant: PropTypes.string,
+  className: PropTypes.any,
+  children: PropTypes.node
+};
 
 class DownloadLinks extends Component {
   constructor(props) {
@@ -21,87 +29,81 @@ class DownloadLinks extends Component {
   }
 
   render() {
-    const { classes, features } = this.props;
+    const { features } = this.props;
     const isEsp8266 = features.board.chip_type === 'esp8266';
     const isEsp32 = features.board.chip_type === 'esp32';
     const envPath = features.board.platformio_env_name;
 
     return (
       <div ref={this.downloadLinksElement}>
-        <div className={classes.donationLinks}>
+        <DonationLinks>
           <Typography>If TasmoCompiler is useful to You, please consider supporting the project:</Typography>
           <a href='https://ko-fi.com/benzino77' target='_blank' rel='noopener noreferrer'>
-            <img src='img/kofi.svg' alt='ko-fi' className={classes.donationImage} />
+            <DonationImage src='img/kofi.svg' alt='ko-fi' />
           </a>
           <a href='https://github.com/sponsors/benzino77' target='_blank' rel='noopener noreferrer'>
-            <img src='img/github.svg' alt='github sponsor' className={classes.donationImage} />
+            <DonationImage src='img/github.svg' alt='github sponsor' />
           </a>
           <a href='https://paypal.me/tasmocompiler' target='_blank' rel='noopener noreferrer'>
-            <img src='img/paypal.svg' alt='paypal' className={classes.donationImage} />
+            <DonationImage src='img/paypal.svg' alt='paypal' />
           </a>
-        </div>
+        </DonationLinks>
 
-        <Typography variant='caption' className={classes.links}>
+        <LinkTypography variant='caption'>
           <FormattedMessage id='stepDownload' />
-        </Typography>
-        <div className={classes.links}>
-          <Button
+        </LinkTypography>
+        <Link>
+          <DownloadButton
             variant='contained'
             color='primary'
             href={`/download/${envPath}.bin`}
-            className={classes.downloadButtons}
           >
             firmware.bin
-            <CloudDownloadIcon className={classes.rightIcon} />
-          </Button>
+            <IconRight />
+          </DownloadButton>
           {isEsp8266 && (
-            <Button
+            <DownloadButton
               variant='contained'
               color='primary'
               href={`/download/${envPath}.bin.gz`}
-              className={classes.downloadButtons}
             >
               firmware.bin.gz
-              <CloudDownloadIcon className={classes.rightIcon} />
-            </Button>
+              <IconRight />
+            </DownloadButton>
           )}
           {isEsp32 && (
-            <Button
+            <DownloadButton
               variant='contained'
               color='primary'
               href={`/download/${envPath}.factory.bin`}
-              className={classes.downloadButtons}
             >
               firmware.factory.bin
-              <CloudDownloadIcon className={classes.rightIcon} />
-            </Button>
+              <IconRight />
+            </DownloadButton>
           )}
-          <Button
+          <DownloadButton
             variant='contained'
             color='primary'
             href='/download/platformio_override.ini'
-            className={classes.downloadButtons}
           >
             platformio_override.ini
-            <CloudDownloadIcon className={classes.rightIcon} />
-          </Button>
-          <Button
+            <IconRight />
+          </DownloadButton>
+          <DownloadButton
             variant='contained'
             color='primary'
             href='/download/user_config_override.h'
-            className={classes.downloadButtons}
           >
             user_config_override.h
-            <CloudDownloadIcon className={classes.rightIcon} />
-          </Button>
-        </div>
+            <IconRight />
+          </DownloadButton>
+        </Link>
       </div>
     );
   }
 }
 
 DownloadLinks.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   features: PropTypes.oneOfType([PropTypes.object]).isRequired,
 };
 

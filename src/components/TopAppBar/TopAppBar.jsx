@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import LanguageIcon from '@material-ui/icons/Language';
-import GitHub from '@material-ui/icons/GitHub';
-import Tooltip from '@material-ui/core/Tooltip';
 import { FormattedMessage } from 'react-intl';
-import { Menu, MenuItem } from '@material-ui/core';
 import { allMessages } from '../../locales/languages';
+import {AppBar, MenuItem, Tooltip, Typography} from "@mui/material";
+import {
+  LanguagesList,
+  LanguagesContainer,
+  LanguagesIcon,
+  ProjectPageContainer,
+  ProjectPageImage,
+  SelectedLanguage,
+  StyledToolbar, FlagIcon, ToolbarRight, Root, IconLeft
+} from "../../styles/styles";
 
 class TopAppBar extends Component {
   constructor(props) {
@@ -22,7 +25,7 @@ class TopAppBar extends Component {
       .then((ret) => {
         this.setState({ version: `v${ret.version}` });
       })
-      .catch((error) => {
+      .catch((_) => {
         this.setState({ version: '' });
       });
   }
@@ -40,28 +43,26 @@ class TopAppBar extends Component {
   };
 
   render() {
-    const { classes, locale, changeLanguage, ...other } = this.props;
+    const { locale, changeLanguage, ...other } = this.props;
     const { version, anchorEl } = this.state;
 
     return (
-      <div className={classes.root}>
-        {/* <AppBar position="static" color="default" {...other} className={classes.appbar}> */}
+      <Root>
         <AppBar {...other} position='static' color='primary'>
-          <Toolbar className={classes.toolbar}>
+          <StyledToolbar>
             <Typography variant='h6' color='inherit'>
               TasmoCompiler {version}
             </Typography>
 
-            <div className={classes.toolbarRight}>
+            <ToolbarRight>
               <Tooltip title={<FormattedMessage id='headerProjectGithubPageTooltip' />}>
-                <div className={classes.projectPageContainer}>
+                <ProjectPageContainer>
                   <a href='https://github.com/benzino77/tasmocompiler' target='_blank' rel='noopener noreferrer'>
-                    <GitHub className={classes.projectPageImg} />
+                    <ProjectPageImage />
                   </a>
-                </div>
+                </ProjectPageContainer>
               </Tooltip>
-              <div
-                className={classes.language}
+              <LanguagesContainer
                 role='button'
                 tabIndex={0}
                 aria-controls='langs-menu'
@@ -69,14 +70,13 @@ class TopAppBar extends Component {
                 onClick={this.handleOpen}
                 onKeyPress={this.handleOpen}
               >
-                <Typography color='inherit' className={classes.language}>
+                <SelectedLanguage color='inherit'>
                   {allMessages[locale].nativeName}
-                  <LanguageIcon className={classes.rightIcon} />
-                </Typography>
-              </div>
-            </div>
-            <Menu
-              className={classes.languageList}
+                  <LanguagesIcon />
+                </SelectedLanguage>
+              </LanguagesContainer>
+            </ToolbarRight>
+            <LanguagesList
               id='langs-menu'
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
@@ -90,21 +90,20 @@ class TopAppBar extends Component {
                 .map((lang) => {
                   return (
                     <MenuItem onClick={() => this.handleClose(lang, locale)} key={lang} selected={locale === lang}>
-                      <img src={allMessages[lang].flag} alt='' className={classes.flagIcon} />
-                      <div className={classes.languageName}>{allMessages[lang].nativeName}</div>
+                      <FlagIcon src={allMessages[lang].flag} alt='' />
+                      <IconLeft>{allMessages[lang].nativeName}</IconLeft>
                     </MenuItem>
                   );
                 })}
-            </Menu>
-          </Toolbar>
+            </LanguagesList>
+          </StyledToolbar>
         </AppBar>
-      </div>
+      </Root>
     );
   }
 }
 
 TopAppBar.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   locale: PropTypes.string.isRequired,
   changeLanguage: PropTypes.func.isRequired,
 };

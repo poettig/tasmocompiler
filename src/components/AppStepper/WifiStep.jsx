@@ -1,21 +1,22 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Typography from '@material-ui/core/Typography';
 
 import NextButton from './NextButton';
 import ClearButton from './ClearButton';
 import BackButton from './BackButton';
 import TextFieldComponent from './TextFieldComponent';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import { FormattedMessage } from 'react-intl';
+import {
+  Checkbox,
+  FormControlLabel,
+  IconButton,
+  InputAdornment,
+  Step,
+  StepContent,
+  Typography
+} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
+import {ActionsContainer, CheckboxContainer, StyledStepLabel, Wrapper} from "../../styles/styles";
 
 class WifiStep extends Component {
   constructor(props) {
@@ -61,7 +62,7 @@ class WifiStep extends Component {
     });
   }
 
-  handleClickShowPassword(event) {
+  handleClickShowPassword(_) {
     this.setState({ showPassword: !this.state.showPassword });
   }
 
@@ -109,15 +110,15 @@ class WifiStep extends Component {
 
     return (
       <Step {...other}>
-        <StepLabel classes={{label: classes.stepLabel}}>
+        <StyledStepLabel>
           <FormattedMessage id="stepWifiConfTitle" />
-        </StepLabel>
+        </StyledStepLabel>
         <StepContent>
           <Typography>
             <FormattedMessage id="stepWifiConfDesc" />
           </Typography>
           <form noValidate autoComplete="off">
-            <div className={classes.actionsContainer}>
+            <ActionsContainer>
               <TextFieldComponent
                 name="STA_SSID1"
                 label={<FormattedMessage id="stepWifiConfSSID" />}
@@ -146,8 +147,8 @@ class WifiStep extends Component {
                   ),
                 }}
               />
-            </div>
-            <div className={classes.checkboxContainer}>
+            </ActionsContainer>
+            <CheckboxContainer>
               <FormControlLabel
                 control={
                   <Checkbox
@@ -159,10 +160,10 @@ class WifiStep extends Component {
                 }
                 label={<FormattedMessage id="stepWifiConfStaticIP" />}
               />
-            </div>
+            </CheckboxContainer>
 
             {staticIPEnabled && (
-              <div className={classes.actionsContainer}>
+              <ActionsContainer>
                 <TextFieldComponent
                   name="WIFI_IP_ADDRESS"
                   label={<FormattedMessage id="stepWifiConfIP" />}
@@ -191,20 +192,20 @@ class WifiStep extends Component {
                   value={WIFI_DNS}
                   onChange={this.handleChange}
                 />
-              </div>
+              </ActionsContainer>
             )}
           </form>
-          <div className={classes.actionsContainer}>
-            <div className={classes.wrapper}>
+          <ActionsContainer>
+            <Wrapper>
               <BackButton disabled={false} onClick={this.handleBack} />
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <ClearButton disabled={false} onClick={this.handleClear} />
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <NextButton disabled={false} onClick={this.handleNext} />
-            </div>
-          </div>
+            </Wrapper>
+          </ActionsContainer>
         </StepContent>
       </Step>
     );
@@ -212,7 +213,6 @@ class WifiStep extends Component {
 }
 
 WifiStep.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   nextHandler: PropTypes.func.isRequired,
   backHandler: PropTypes.func.isRequired,
 };

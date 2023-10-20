@@ -1,21 +1,22 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
+import {TextField} from "@mui/material";
+import {StyledTextField} from "../../styles/styles";
 
 function TextFieldComponent(props) {
   const { name, label, classes, value, type, onChange, inputProps } = props;
 
   return (
-    <TextField
+    <StyledTextField
       id={`${name}-id`}
       name={name}
       label={label}
-      className={classes.textField}
       value={value}
       onChange={onChange}
       margin="normal"
       type={type}
       InputProps={inputProps}
+      variant="standard"
     />
   );
 }
@@ -23,7 +24,6 @@ function TextFieldComponent(props) {
 TextFieldComponent.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   inputProps: PropTypes.oneOfType([PropTypes.object]),
   value: PropTypes.string.isRequired,
   type: PropTypes.string,

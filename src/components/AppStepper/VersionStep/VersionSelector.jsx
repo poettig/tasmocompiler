@@ -1,15 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import MenuItem from '@material-ui/core/MenuItem';
-import { FormattedMessage } from 'react-intl';
+import {FormattedMessage} from 'react-intl';
+import {InputLabel, MenuItem, Select} from "@mui/material";
+import {
+  FlagIcon,
+  LanguageFormControl,
+  IconRight,
+  TasmotaConfigSelector,
+  VersionFormControl
+} from "../../../styles/styles";
 
 function VersionSelector(props) {
   const {
     name,
-    classes,
     label,
     value,
     onChange,
@@ -22,28 +25,22 @@ function VersionSelector(props) {
     id: `${name}-id`,
   };
 
-  return (
-    <FormControl
-      className={
-        name === 'MY_LANGUAGE'
-          ? classes.languageContainer
-          : classes.versionContainer
-      }
-    >
+  const content = (
+    <>
       <InputLabel htmlFor={inProps.id}>{label}</InputLabel>
-      <Select value={value} onChange={onChange} inputProps={inProps}>
+      <Select value={value} onChange={onChange} inputProps={inProps} variant="standard">
         {items.map((item) => (
           <MenuItem key={item.name || item} value={item.value || item}>
             {name !== 'MY_LANGUAGE' &&
               (item === 'development' ? (
-                <FormattedMessage id="stepVersionDevelopment" />
+                <FormattedMessage id="stepVersionDevelopment"/>
               ) : (
                 item
               ))}
             {name === 'MY_LANGUAGE' && (
-              <div className={classes.tasmotaLangSelector}>
-                <img className={classes.flagIcon} src={item.flag} alt="" />
-                <div className={classes.languageName}>
+              <TasmotaConfigSelector>
+                <FlagIcon src={item.flag} alt=""/>
+                <IconRight>
                   <FormattedMessage id={item.name}>
                     {(text) => {
                       const suffix =
@@ -53,19 +50,26 @@ function VersionSelector(props) {
                       return `${text}${suffix}`;
                     }}
                   </FormattedMessage>
-                </div>
-              </div>
+                </IconRight>
+              </TasmotaConfigSelector>
             )}
           </MenuItem>
         ))}
       </Select>
-    </FormControl>
+    </>
+  );
+
+  return (
+    <>
+      {name === "MY_LANGUAGE" ?
+        <LanguageFormControl>{content}</LanguageFormControl> :
+        <VersionFormControl>{content}</VersionFormControl>}
+    </>
   );
 }
 
 VersionSelector.propTypes = {
   name: PropTypes.string.isRequired,
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   label: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
   value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]).isRequired,
   items: PropTypes.oneOfType([PropTypes.array]).isRequired,

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Button from '@material-ui/core/Button';
 import { FormattedMessage } from 'react-intl';
+import {Button} from "@mui/material";
 
-function NextButton(props) {
+function ClearButton(props) {
   const { disabled, onClick } = props;
   return (
     <Button
@@ -12,14 +12,14 @@ function NextButton(props) {
       color="primary"
       onClick={onClick}
     >
-      <FormattedMessage id="btnNext" />
+      <FormattedMessage id="btnClear" />
     </Button>
   );
 }
 
-NextButton.propTypes = {
+ClearButton.propTypes = {
   disabled: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
-export default NextButton;
+export default ClearButton;

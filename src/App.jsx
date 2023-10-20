@@ -1,11 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Stepper from '@material-ui/core/Stepper';
+import React, {Component} from 'react';
 import io from 'socket.io-client';
-import { IntlProvider } from 'react-intl';
+import {IntlProvider} from 'react-intl';
 
-import styles from './styles/styles';
 import TopAppBar from './components/TopAppBar/TopAppBar';
 import SourceStep from './components/AppStepper/SourceStep';
 import VersionStep from './components/AppStepper/VersionStep/VersionStep';
@@ -14,9 +10,11 @@ import FeaturesStep from './components/AppStepper/FeaturesStep/FeaturesStep';
 import CustomParametersStep from './components/AppStepper/CustomParametersStep';
 import MessageBox from './components/MessageBox/MessageBox';
 import DownloadLinks from './components/DownloadLinks/DownloadLinks';
-import { allMessages, defaultLanguage } from './locales/languages';
-import { tasmotaGUILanguages } from './components/AppStepper/VersionStep/Variables/Languages';
+import {allMessages, defaultLanguage} from './locales/languages';
+import {tasmotaGUILanguages} from './components/AppStepper/VersionStep/Variables/Languages';
 import availableFeatures from './components/AppStepper/FeaturesStep/AvailableFeatures';
+import {Root, StyledStepper} from "./styles/styles";
+import {createTheme, ThemeProvider} from "@mui/material";
 
 const browserLanguage = navigator.language.toLocaleLowerCase();
 
@@ -62,12 +60,12 @@ class App extends Component {
       this.setState((state) => {
         let newMessages = state.compileMessages;
         newMessages = `${newMessages}${data}`;
-        return { compileMessages: newMessages };
+        return {compileMessages: newMessages};
       });
     });
 
     socket.on('finished', (data) => {
-      this.setState({ compiling: false, showDownloadLinks: data.ok });
+      this.setState({compiling: false, showDownloadLinks: data.ok});
     });
 
     this.changeLanguage(this.state.tcGUILanguage);
@@ -114,7 +112,7 @@ class App extends Component {
         fetch(uri, {
           method: 'POST',
           body: JSON.stringify(postData),
-          headers: { 'Content-Type': 'application/json' },
+          headers: {'Content-Type': 'application/json'},
         })
           .then((res) => res.json())
           .then((json) => {
@@ -122,12 +120,12 @@ class App extends Component {
               this.setState((state) => {
                 let newMessages = state.compileMessages;
                 newMessages = `${newMessages}${json.message}`;
-                return { compileMessages: newMessages, compiling: false };
+                return {compileMessages: newMessages, compiling: false};
               });
             }
           })
           .catch((error) => {
-            this.setState({ compileMessages: error.message, compiling: false });
+            this.setState({compileMessages: error.message, compiling: false});
           });
       }
     );
@@ -144,12 +142,10 @@ class App extends Component {
         allMessages[lang]['source'][b.description]
       );
     });
-    this.setState({ tcGUILanguage: lang });
+    this.setState({tcGUILanguage: lang});
   };
 
   render() {
-    const { classes } = this.props;
-
     const {
       activeStep,
       tags,
@@ -166,50 +162,56 @@ class App extends Component {
       nextHandler: this.handleNext,
     };
 
+    const theme = createTheme({
+      palette: {
+        primary: {
+          main: "#3f51b5"
+        }
+      }
+    });
+
     return (
-      <IntlProvider
-        locale={tcGUILanguage}
-        messages={allMessages[tcGUILanguage]['source']}
-      >
-        <div className={classes.root}>
-          <TopAppBar
-            {...this.props}
-            locale={tcGUILanguage}
-            changeLanguage={this.changeLanguage}
-          />
-          <Stepper activeStep={activeStep} orientation="vertical">
-            <SourceStep {...this.props} nextHandler={this.handleNext} key={1} />
-            <WifiStep {...this.props} {...bnHandlersProps} key={2} />
-            <FeaturesStep {...this.props} {...bnHandlersProps} key={3} />
-            <CustomParametersStep
+      <ThemeProvider theme={theme}>
+        <IntlProvider
+          locale={tcGUILanguage}
+          messages={allMessages[tcGUILanguage]['source']}
+        >
+          <Root>
+            <TopAppBar
               {...this.props}
-              {...bnHandlersProps}
-              pstate={other}
-              key={4}
+              locale={tcGUILanguage}
+              changeLanguage={this.changeLanguage}
             />
-            <VersionStep
-              {...this.props}
-              repoTags={tags}
-              backHandler={this.handleBack}
-              compileHandler={this.handleCompile}
-              compiling={compiling}
-              key={5}
-            />
-          </Stepper>
-          {showMessageBox && (
-            <MessageBox {...this.props} compileMessages={compileMessages} />
-          )}
-          {showDownloadLinks && (
-            <DownloadLinks {...this.props} features={other.features} />
-          )}
-        </div>
-      </IntlProvider>
+            <StyledStepper activeStep={activeStep} orientation="vertical">
+              <SourceStep {...this.props} nextHandler={this.handleNext} key={1}/>
+              <WifiStep {...this.props} {...bnHandlersProps} key={2}/>
+              <FeaturesStep {...this.props} {...bnHandlersProps} key={3}/>
+              <CustomParametersStep
+                {...this.props}
+                {...bnHandlersProps}
+                pstate={other}
+                key={4}
+              />
+              <VersionStep
+                {...this.props}
+                repoTags={tags}
+                backHandler={this.handleBack}
+                compileHandler={this.handleCompile}
+                compiling={compiling}
+                key={5}
+              />
+            </StyledStepper>
+            {showMessageBox && (
+              <MessageBox {...this.props} compileMessages={compileMessages}/>
+            )}
+            {showDownloadLinks && (
+              <DownloadLinks {...this.props} features={other.features}/>
+            )}
+          </Root>
+        </IntlProvider>
+      </ThemeProvider>
     );
   }
 }
 
-App.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
-};
-
-export default withStyles(styles)(App);
+export default App;
