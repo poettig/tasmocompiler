@@ -1,10 +1,9 @@
-FROM node:20-slim
+FROM node:20-slim as dev
 LABEL maintainer="Piotr Antczak <antczak.piotr@gmail.com>"
 
 ENV PATH="$PATH:/root/.local/bin"
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
-ENV NODE_ENV=production
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
@@ -13,11 +12,28 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 RUN pipx install platformio
 
-ADD package.json package-lock.json /tasmocompiler/
+
+
+FROM node:20-slim as build
+
+ENV NODE_ENV=development
+
+ADD index.html vite.config.js package.json package-lock.json /tasmocompiler/
 ADD public /tasmocompiler/public/
-ADD server /tasmocompiler/server/
 ADD src /tasmocompiler/src/
-RUN cd /tasmocompiler && npm ci --omit=dev && npm run build
+RUN cd /tasmocompiler && npm ci && npm run build && rm -r node_modules
+
+
+
+FROM dev as prod
+
+ENV NODE_ENV=production
+
+ADD package.json package-lock.json /tasmocompiler/
+ADD server /tasmocompiler/server/
+RUN cd /tasmocompiler && npm ci --omit=dev
+
+COPY --from=build /tasmocompiler/build /tasmocompiler/build/
 
 WORKDIR /tasmocompiler
 ENTRYPOINT ["node", "/tasmocompiler/server/app.js"]
