@@ -7,6 +7,17 @@ const helpers = require('../utils/helpers');
 
 const { tasmotaRepo, githubRepo, minVersion, maxVersion, edgeBranch } = require('../config/config');
 
+function handleError(message, error) {
+  try {
+    message += `: ${error.message.split("\n")[0]}`;
+  } catch {
+    // Do nothing, the message will just not be appended.
+  }
+
+  debug(message);
+  throw new Error(message);
+}
+
 const isGitRepoAvailable = async () => {
   try {
     await fs.stat(tasmotaRepo);
@@ -46,9 +57,7 @@ const getRepoTags = async () => {
       tags = tags.filter((t) => semver.valid(t) && semver.gte(t, minVersion) && semver.lte(t, maxVersion));
       return [...tags];
     } catch (e) {
-      debug(e.message);
-      debug(message);
-      throw new Error(message);
+      handleError(message, e);
     }
   }
 
@@ -63,17 +72,13 @@ const switchToBranch = async (branch) => {
   try {
     await git(tasmotaRepo).reset('hard');
   } catch (e) {
-    const message = 'Unable to RESET repository';
-    debug(message);
-    throw new Error(message);
+    handleError('Unable to RESET repository', e);
   }
 
   try {
     await git(tasmotaRepo).clean('dfx');
   } catch (e) {
-    const message = 'Unable to CLEAN repository';
-    debug(message);
-    throw new Error(message);
+    handleError('Unable to CLEAN repository', e);
   }
 
   try {
@@ -110,14 +115,11 @@ const cloneRepo = async () => {
       await git().clone(githubRepo, tasmotaRepo);
       debug('Repo cloned.');
     } catch (e) {
-      const message = 'Unable to CLONE git repository';
-      debug(message);
-      throw new Error(message);
+      handleError("Unable to CLONE git repository", e);
     }
   }
 
-  const tags = await getRepoTags();
-  return tags;
+  return await getRepoTags();
 };
 
 const pullRepo = async (refresh) => {
@@ -129,18 +131,14 @@ const pullRepo = async (refresh) => {
       await git(tasmotaRepo).pull();
       debug('Branch %s is now up to date.', edgeBranch);
     } catch (e) {
-      const message = 'Unable to PULL latest changes';
-      debug(message);
-      throw new Error(message);
+      handleError('Unable to PULL latest changes', e);
     }
 
-    const tags = await getRepoTags();
-    return tags;
+    return await getRepoTags();
   }
 
   debug('There is no repository available. Trying to clone.');
-  const tags = await cloneRepo();
-  return tags;
+  return await cloneRepo();
 };
 
 module.exports = {

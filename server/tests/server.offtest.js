@@ -1,12 +1,12 @@
-const request = require('supertest');
-const fsMock = require('fs-extra');
-const { server } = require('../server');
-const io = require('socket.io-client');
-
-const workdir = process.env.WORKDIR;
-
-const listenPort = 5000;
-const timeOut = 10 * 60 * 1000;
+// const request = require('supertest');
+// const fsMock = require('fs-extra');
+// const { server } = require('../server');
+// const io = require('socket.io-client');
+//
+// const workdir = process.env.WORKDIR;
+//
+// const listenPort = 5000;
+// const timeOut = 10 * 60 * 1000;
 
 describe('server.js integration testing', () => {
   it('dummy test', () => {

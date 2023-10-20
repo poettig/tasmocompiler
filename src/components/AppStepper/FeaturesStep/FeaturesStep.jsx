@@ -1,16 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Step from '@material-ui/core/Step';
-import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
-import Typography from '@material-ui/core/Typography';
-import Tooltip from '@material-ui/core/Tooltip';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControl from '@material-ui/core/FormControl';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Divider from '@material-ui/core/Divider';
-import LinkIcon from '@material-ui/icons/Link';
 
 import availableFeatures from './AvailableFeatures';
 import { availableBoards, availableBoardChipTypes } from './AvailableBoards';
@@ -18,6 +7,23 @@ import FeaturesSelector from './FeaturesSelector';
 import NextButton from '../NextButton';
 import BackButton from '../BackButton';
 import { FormattedMessage } from 'react-intl';
+import {
+  FormControl,
+  FormControlLabel, Radio,
+  RadioGroup,
+  Step,
+  StepContent,
+  Tooltip,
+  Typography
+} from "@mui/material";
+import {Link} from "@mui/icons-material";
+import {
+  ActionsContainer,
+  BoardsDivider,
+  ChipTypesContainer, FeaturesHeaderContainer,
+  RadioContainer,
+  StyledStepLabel, Wrapper
+} from "../../../styles/styles";
 
 const getFeaturesDefaultStates = (board) => {
   let defaults = {};
@@ -192,19 +198,19 @@ class FeaturesStep extends Component {
     const Wire = ({ children, ...props }) => children(props);
     return (
       <Step {...other}>
-        <StepLabel classes={{ label: classes.stepLabel }}>
+        <StyledStepLabel>
           <FormattedMessage id='stepFeaturesTitle' />
-        </StepLabel>
+        </StyledStepLabel>
         <StepContent>
           <Typography>
             <FormattedMessage id='stepFeaturesBoardDesc' />
           </Typography>
 
-          <div className={classes.actionsContainer}>
+          <ActionsContainer>
             <FormControl>
               {availableBoardChipTypes.map((chipType, idx) => {
                 return (
-                  <div className={classes.chipTypesContainer} key={chipType.name}>
+                  <ChipTypesContainer key={chipType.name}>
                     <Typography>{chipType.name.toUpperCase()}</Typography>
                     <RadioGroup
                       row
@@ -222,14 +228,14 @@ class FeaturesStep extends Component {
                             <Wire value={name} key={item.name}>
                               {(props) => (
                                 <Tooltip title={tooltip ? <FormattedMessage id={tooltip} /> : ''}>
-                                  <div className={classes.radioContainer}>
+                                  <RadioContainer>
                                     <FormControlLabel
                                       control={<Radio />}
                                       label={description}
                                       labelPlacement='end'
                                       {...props}
                                     />
-                                  </div>
+                                  </RadioContainer>
                                 </Tooltip>
                               )}
                             </Wire>
@@ -237,13 +243,13 @@ class FeaturesStep extends Component {
                         );
                       })}
                     </RadioGroup>
-                    {idx < availableBoardChipTypes.length - 1 && <Divider className={classes.boardsDivider} />}
-                  </div>
+                    {idx < availableBoardChipTypes.length - 1 && <BoardsDivider />}
+                  </ChipTypesContainer>
                 );
               })}
             </FormControl>
-          </div>
-          <div className={classes.featuresHeaderContainer}>
+          </ActionsContainer>
+          <FeaturesHeaderContainer>
             <Typography>
               <FormattedMessage id='stepFeaturesDesc' />
             </Typography>
@@ -253,11 +259,11 @@ class FeaturesStep extends Component {
                 target='_blank'
                 rel='noopener noreferrer'
               >
-                <LinkIcon color='primary' />
+                <Link color='primary' />
               </a>
             </Tooltip>
-          </div>
-          <div className={classes.actionsContainer}>
+          </FeaturesHeaderContainer>
+          <ActionsContainer>
             {availableFeatures.map(
               (item) =>
                 item.show &&
@@ -272,15 +278,15 @@ class FeaturesStep extends Component {
                   />
                 )
             )}
-          </div>
-          <div className={classes.actionsContainer}>
-            <div className={classes.wrapper}>
+          </ActionsContainer>
+          <ActionsContainer>
+            <Wrapper>
               <BackButton disabled={false} onClick={this.handleBack} />
-            </div>
-            <div className={classes.wrapper}>
+            </Wrapper>
+            <Wrapper>
               <NextButton disabled={false} onClick={this.handleNext} />
-            </div>
-          </div>
+            </Wrapper>
+          </ActionsContainer>
         </StepContent>
       </Step>
     );
@@ -288,7 +294,6 @@ class FeaturesStep extends Component {
 }
 
 FeaturesStep.propTypes = {
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   nextHandler: PropTypes.func.isRequired,
   backHandler: PropTypes.func.isRequired,
 };

@@ -1,20 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Tooltip from '@material-ui/core/Tooltip';
-import Checkbox from '@material-ui/core/Checkbox';
 import { FormattedMessage } from 'react-intl';
+import {Checkbox, FormControlLabel, Tooltip} from "@mui/material";
+import {CheckboxContainer} from "../../../styles/styles";
 
 function FeaturesSelector(props) {
   const {
     value,
     onChange,
-    classes,
     item: { description, tooltip, name },
   } = props;
 
   return (
-    <div className={classes.checkboxContainer}>
+    <CheckboxContainer>
       <Tooltip title={tooltip ? (<FormattedMessage id={tooltip} />) : ('')}>
         <FormControlLabel
           control={(
@@ -28,14 +26,13 @@ function FeaturesSelector(props) {
           label={<FormattedMessage id={description} />}
         />
       </Tooltip>
-    </div>
+    </CheckboxContainer>
   );
 }
 
 FeaturesSelector.propTypes = {
   value: PropTypes.bool.isRequired,
   onChange: PropTypes.func.isRequired,
-  classes: PropTypes.oneOfType([PropTypes.object]).isRequired,
   item: PropTypes.shape({
     description: PropTypes.string,
     tooltip: PropTypes.string,

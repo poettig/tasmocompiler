@@ -77,14 +77,14 @@ const availableFeatures = [
     ],
     include: ['USE_SPI', 'USE_I2C'],
     custom:
-      '#define MTX_ADDRESS1     0x71              // [DisplayAddress1] I2C address of first 8x8 matrix module\n' +
-      '#define MTX_ADDRESS2     0x74              // [DisplayAddress2] I2C address of second 8x8 matrix module\n' +
-      '#define MTX_ADDRESS3     0x75              // [DisplayAddress3] I2C address of third 8x8 matrix module\n' +
-      '#define MTX_ADDRESS4     0x72              // [DisplayAddress4] I2C address of fourth 8x8 matrix module\n' +
-      '#define MTX_ADDRESS5     0x73              // [DisplayAddress5] I2C address of fifth 8x8 matrix module\n' +
-      '#define MTX_ADDRESS6     0x76              // [DisplayAddress6] I2C address of sixth 8x8 matrix module\n' +
-      '#define MTX_ADDRESS7     0x00              // [DisplayAddress7] I2C address of seventh 8x8 matrix module\n' +
-      '#define MTX_ADDRESS8     0x00              // [DisplayAddress8] I2C address of eigth 8x8 matrix module\n',
+      '#define MTX_ADDRESS1     0x71              // [DisplayAddress1] I2C address of first 8x8 matrix module\n'
+      + '#define MTX_ADDRESS2     0x74              // [DisplayAddress2] I2C address of second 8x8 matrix module\n'
+      + '#define MTX_ADDRESS3     0x75              // [DisplayAddress3] I2C address of third 8x8 matrix module\n'
+      + '#define MTX_ADDRESS4     0x72              // [DisplayAddress4] I2C address of fourth 8x8 matrix module\n'
+      + '#define MTX_ADDRESS5     0x73              // [DisplayAddress5] I2C address of fifth 8x8 matrix module\n'
+      + '#define MTX_ADDRESS6     0x76              // [DisplayAddress6] I2C address of sixth 8x8 matrix module\n'
+      + '#define MTX_ADDRESS7     0x00              // [DisplayAddress7] I2C address of seventh 8x8 matrix module\n'
+      + '#define MTX_ADDRESS8     0x00              // [DisplayAddress8] I2C address of eigth 8x8 matrix module\n',
     boards: [
       'esp8266generic',
       'esp82664M',
@@ -342,21 +342,21 @@ const availableFeatures = [
     description: 'stepFeaturesZigbeeDesc',
     tooltip: 'stepFeaturesZigbeeTooltip',
     custom:
-      '//Note: USE_ZIGBEE_ZNP and USE_ZIGBEE_EZSP are mutually incompatible, you must select exactly one\n\n' +
-      '// Enable ZNP protocol, needed for CC2530 based devices\n' +
-      '#define USE_ZIGBEE_ZNP\n' +
-      '// Enable EZSP protocol, needed for EFR32 EmberZNet based devices, like Sonoff Zigbee bridge\n' +
-      '//#define USE_ZIGBEE_EZSP\n' +
-      '//#ifdef USE_ZIGBEE_ZNP\n' +
-      '//  #undef USE_ZIGBEE_ZNP\n' +
-      '//#endif\n\n' +
-      '#define USE_ZIGBEE_CHANNEL  11  // Zigbee Channel (11-26)\n' +
-      '#define USE_ZIGBEE_TXRADIO_DBM  20  // Tx Radio power in dBm (only for EZSP, EFR32 can go up to 20 dBm)\n' +
-      '#define USE_ZIGBEE_COALESCE_ATTR_TIMER 350  // timer to coalesce attribute values (in ms)\n' +
-      '#define USE_ZIGBEE_MODELID      "Tasmota Z2T"// reported "ModelId"      (cluster 0000 / attribute 0005)\n' +
-      '#define USE_ZIGBEE_MANUFACTURER "Tasmota"  // reported "Manufacturer" (cluster 0000 / attribute 0004)\n' +
-      '#define USE_ZBBRIDGE_TLS // TLS support for zbbridge\n' +
-      '#define USE_ZIGBEE_ZBBRIDGE_EEPROM 0x50  // I2C id for the ZBBridge EEPROM\n',
+      '//Note: USE_ZIGBEE_ZNP and USE_ZIGBEE_EZSP are mutually incompatible, you must select exactly one\n\n'
+      + '// Enable ZNP protocol, needed for CC2530 based devices\n'
+      + '#define USE_ZIGBEE_ZNP\n'
+      + '// Enable EZSP protocol, needed for EFR32 EmberZNet based devices, like Sonoff Zigbee bridge\n'
+      + '//#define USE_ZIGBEE_EZSP\n'
+      + '//#ifdef USE_ZIGBEE_ZNP\n'
+      + '//  #undef USE_ZIGBEE_ZNP\n'
+      + '//#endif\n\n'
+      + '#define USE_ZIGBEE_CHANNEL  11  // Zigbee Channel (11-26)\n'
+      + '#define USE_ZIGBEE_TXRADIO_DBM  20  // Tx Radio power in dBm (only for EZSP, EFR32 can go up to 20 dBm)\n'
+      + '#define USE_ZIGBEE_COALESCE_ATTR_TIMER 350  // timer to coalesce attribute values (in ms)\n'
+      + '#define USE_ZIGBEE_MODELID      "Tasmota Z2T"// reported "ModelId"      (cluster 0000 / attribute 0005)\n'
+      + '#define USE_ZIGBEE_MANUFACTURER "Tasmota"  // reported "Manufacturer" (cluster 0000 / attribute 0004)\n'
+      + '#define USE_ZBBRIDGE_TLS // TLS support for zbbridge\n'
+      + '#define USE_ZIGBEE_ZBBRIDGE_EEPROM 0x50  // I2C id for the ZBBridge EEPROM\n',
     boards: [
       'esp8266',
       'esp82664M',

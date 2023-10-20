@@ -1,6 +1,7 @@
 module.exports = {
   extends: [
     'react-app',
+    'airbnb',
   ],
   rules: {
     'react/jsx-filename-extension': [
@@ -18,5 +19,6 @@ module.exports = {
         props: false,
       },
     ],
+    'max-len': ['error', { code: 120 }],
   },
 };

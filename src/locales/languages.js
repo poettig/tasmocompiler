@@ -77,7 +77,7 @@ const allMessages = {
 // source of truth
 const baseTranslation = 'en';
 
-// get all defined translations other then source of truth
+// get all defined translations other than source of truth
 // const translations = Object.keys(allMessages).filter(
 //   (l) => l !== baseTranslation
 // );

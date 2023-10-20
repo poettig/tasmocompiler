@@ -17,13 +17,12 @@ describe('compile.js test', () => {
       socket.emit.mockClear();
     });
 
-    it('should throw an error on writeFile fail', async (done) => {
+    it('should throw an error on writeFile fail', async () => {
       fsMock.__setFsWriteFileReject(true);
       await compileCode(socket, testData);
 
       expect(socket.emit).toBeCalledTimes(2);
       expect(socket.emit).toHaveBeenNthCalledWith(2, 'finished', { ok: false });
-      done();
     });
   });
 });
