@@ -16,8 +16,6 @@ RUN pipx install platformio
 
 FROM node:20-slim as build
 
-ENV NODE_ENV=development
-
 ADD index.html vite.config.js package.json package-lock.json /tasmocompiler/
 ADD public /tasmocompiler/public/
 ADD src /tasmocompiler/src/
