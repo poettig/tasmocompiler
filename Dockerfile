@@ -16,7 +16,7 @@ RUN pipx install platformio
 
 FROM node:20-slim as build
 
-ADD index.html vite.config.js package.json package-lock.json /tasmocompiler/
+ADD index.html vite.config.mjs package.json package-lock.json /tasmocompiler/
 ADD public /tasmocompiler/public/
 ADD src /tasmocompiler/src/
 RUN cd /tasmocompiler && npm ci && npm run build && rm -r node_modules
