@@ -5,7 +5,7 @@ const debug = require('debug')('git');
 const semver = require('semver');
 const helpers = require('../utils/helpers');
 
-const { tasmotaRepo, githubRepo, minVersion, maxVersion, edgeBranch } = require('../config/config');
+const { tasmotaRepo, githubRepo, edgeBranch } = require('../config/config');
 
 function handleError(message, error) {
   try {
@@ -54,7 +54,7 @@ const getRepoTags = async () => {
       }
       const allTags = await git(tasmotaRepo).tags();
       let tags = allTags.all.filter((t) => t.startsWith('v'));
-      tags = tags.filter((t) => semver.valid(t) && semver.gte(t, minVersion) && semver.lte(t, maxVersion));
+      tags = tags.filter((t) => semver.valid(t));
       return [...tags];
     } catch (e) {
       handleError(message, e);
