@@ -1,6 +1,7 @@
 name: Run compile tests
 on:
   workflow_dispatch:
+  push:
   schedule:
     - cron: '0 7 * * 0'
 
@@ -12,7 +13,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: development
+          ref: main
 
       - name: Clone Tasmota
         uses: actions/checkout@v4
