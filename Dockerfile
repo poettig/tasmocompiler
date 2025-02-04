@@ -23,7 +23,7 @@ RUN cd /tasmocompiler && npm ci && npm run build && rm -r node_modules
 
 
 
-FROM dev as prod
+FROM build as prod
 
 ENV NODE_ENV=production
 
