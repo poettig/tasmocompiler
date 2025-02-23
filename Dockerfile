@@ -1,4 +1,4 @@
-FROM node:20-slim as dev
+FROM node:20-slim as base
 LABEL maintainer="Piotr Antczak <antczak.piotr@gmail.com>"
 
 ENV PATH="$PATH:/root/.local/bin"
@@ -23,7 +23,7 @@ RUN cd /tasmocompiler && npm ci && npm run build && rm -r node_modules
 
 
 
-FROM build as prod
+FROM base as prod
 
 ENV NODE_ENV=production
 
