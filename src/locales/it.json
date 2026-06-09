@@ -51,7 +51,7 @@
   "stepFeaturesIRFullTooltip": "Supporto completo infrarossi",
   "stepFeaturesMDNSDesc": "Discovery mDNS",
   "stepFeaturesMQTTTLSDesc": "MQTT su TLS",
-  "stepFeaturesMQTTTLSTooltip": "Questa funzionè è disponibile solo con la versione Tasmota 6.6.0.9 o successive.",
+  "stepFeaturesMQTTTLSTooltip": "Questa funzione è disponibile solo con la versione Tasmota 6.6.0.9 o successive.",
   "stepFeaturesRFTransceiverDesc": "Ricevitore RF",
   "stepFeaturesRFTransceiverTooltip": "Supporto per ricevitore RF usando la libreria RcSwitch",
   "stepFeaturesRulesDesc": "Regole",
@@ -77,6 +77,9 @@
   "stepFeaturesI2CDesc": "Supporto I2C",
   "stepFeaturesSPIDesc": "Supporto SPI",
   "stepFeaturesModbusBridgeDesc": "Bridge Modbus",
+  "stepFeaturesMatterDesc": "Protocollo Matter",
+  "stepFeaturesLvglDesc": "LVGL",
+  "stepFeaturesLvglTooltip": "Light and Versatile Embedded Graphics Library",
 
   "stepCustomParamsTitle": "Parametri personalizzati",
   "stepCustomParamsDesc": "Qui sotto puoi inserire i parametri personalizzati che verranno inclusi alla fine del file. Se non li conosci o non devi inserirli seleziona 'Avanti'.",

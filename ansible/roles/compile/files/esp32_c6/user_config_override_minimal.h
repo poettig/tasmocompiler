@@ -4,19 +4,7 @@
 #ifdef CODE_IMAGE_STR
   #undef CODE_IMAGE_STR
 #endif
-#define CODE_IMAGE_STR "TasmoCompiler-esp32webcam"
-
-#ifdef USE_DISPLAY
-  #undef USE_DISPLAY
-#endif
-
-#ifdef USE_UNIVERSAL_DISPLAY
-  #undef USE_UNIVERSAL_DISPLAY
-#endif
-
-#ifdef USE_UNIVERSAL_TOUCH
-  #undef USE_UNIVERSAL_TOUCH
-#endif
+#define CODE_IMAGE_STR "TasmoCompiler-esp32c6"
 
 #ifdef USE_ENERGY_SENSOR
   #undef USE_ENERGY_SENSOR
@@ -116,64 +104,8 @@
 #endif
 #define USE_BERRY_PSRAM
 
-#ifdef USE_BLE_ESP32
-  #undef USE_BLE_ESP32
-#endif
-
-#ifdef USE_MI_ESP32
-  #undef USE_MI_ESP32
-#endif
-
-#ifdef USE_EQ3_ESP32
-  #undef USE_EQ3_ESP32
-#endif
-
-#ifdef CONFIG_NIMBLE_CPP_IDF
-  #undef CONFIG_NIMBLE_CPP_IDF
-#endif
-
 #ifdef USE_ADC_VCC
   #undef USE_ADC_VCC
-#endif
-
-#ifdef USE_DISPLAY_TM1637
-  #undef USE_DISPLAY_TM1637
-#endif
-
-#ifdef USE_DISPLAY_MAX7219
-  #undef USE_DISPLAY_MAX7219
-#endif
-
-#ifdef USE_DISPLAY_MODES1TO5
-  #undef USE_DISPLAY_MODES1TO5
-#endif
-
-#ifdef USE_DISPLAY_LCD
-  #undef USE_DISPLAY_LCD
-#endif
-
-#ifdef USE_DISPLAY_MATRIX
-  #undef USE_DISPLAY_MATRIX
-#endif
-
-#ifdef USE_DISPLAY_TM1650
-  #undef USE_DISPLAY_TM1650
-#endif
-
-#ifdef USE_DISPLAY_EPAPER_29
-  #undef USE_DISPLAY_EPAPER_29
-#endif
-
-#ifdef USE_DISPLAY_EPAPER_42
-  #undef USE_DISPLAY_EPAPER_42
-#endif
-
-#ifdef USE_DISPLAY_RA8876
-  #undef USE_DISPLAY_RA8876
-#endif
-
-#ifdef USE_DISPLAY_SEVENSEG
-  #undef USE_DISPLAY_SEVENSEG
 #endif
 
 #ifdef USE_SR04
@@ -272,10 +204,6 @@
   #undef USE_ENERGY_DUMMY
 #endif
 
-#ifdef USE_ETHERNET
-  #undef USE_ETHERNET
-#endif
-
 #ifdef USE_HOME_ASSISTANT
   #undef USE_HOME_ASSISTANT
 #endif
@@ -346,98 +274,6 @@
 
 #ifdef USE_VEML7700
   #undef USE_VEML7700
-#endif
-
-#ifdef USE_LVGL
-  #undef USE_LVGL
-#endif
-
-#ifdef USE_MPU_ACCEL
-  #undef USE_MPU_ACCEL
-#endif
-
-#ifdef USE_RTC_CHIPS
-  #undef USE_RTC_CHIPS
-#endif
-
-#ifdef USE_BM8563
-  #undef USE_BM8563
-#endif
-
-#ifdef USE_XPT2046
-  #undef USE_XPT2046
-#endif
-
-#ifdef USE_FT5206
-  #undef USE_FT5206
-#endif
-
-#ifdef USE_GT911
-  #undef USE_GT911
-#endif
-
-#ifdef USE_CST816S
-  #undef USE_CST816S
-#endif
-
-#ifdef USE_DISPLAY_LVGL_ONLY
-  #undef USE_DISPLAY_LVGL_ONLY
-#endif
-
-#ifdef USE_ENHANCED_GUI_WIFI_SCAN
-  #undef USE_ENHANCED_GUI_WIFI_SCAN
-#endif
-
-#ifdef ROTARY_V1
-  #undef ROTARY_V1
-#endif
-
-#ifdef USE_BUZZER
-  #undef USE_BUZZER
-#endif
-
-#ifdef USE_LIGHT_PALETTE
-  #undef USE_LIGHT_PALETTE
-#endif
-
-#ifdef USE_SHELLY_PRO
-  #undef USE_SHELLY_PRO
-#endif
-
-#ifdef USE_SERIAL_BRIDGE
-  #undef USE_SERIAL_BRIDGE
-#endif
-
-#ifdef USE_MATTER_DEVICE
-  #undef USE_MATTER_DEVICE
-#endif
-
-#ifdef USE_BERRY_CRYPTO_EC_P256
-  #undef USE_BERRY_CRYPTO_EC_P256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_HMAC_SHA256
-  #undef USE_BERRY_CRYPTO_HMAC_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_HKDF_SHA256
-  #undef USE_BERRY_CRYPTO_HKDF_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_AES_CCM
-  #undef USE_BERRY_CRYPTO_AES_CCM
-#endif
-
-#ifdef USE_BERRY_CRYPTO_AES_CTR
-  #undef USE_BERRY_CRYPTO_AES_CTR
-#endif
-
-#ifdef USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
-  #undef USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_SPAKE2P_MATTER
-  #undef USE_BERRY_CRYPTO_SPAKE2P_MATTER
 #endif
 
 #ifdef USE_DISCOVERY
@@ -613,43 +449,6 @@
 #ifdef USE_WS2812
   #undef USE_WS2812
 #endif
-
-#ifdef USE_ZIGBEE
-  #undef USE_ZIGBEE
-#endif
-
-#ifdef USE_WEBCAM
-  #undef USE_WEBCAM
-#endif
-#define USE_WEBCAM
-
-#ifdef USE_WEBCAM_V2
-  #undef USE_WEBCAM_V2
-#endif
-#define USE_WEBCAM_V2
-
-#ifdef USE_TASMOTA_DISCOVERY
-  #undef USE_TASMOTA_DISCOVERY
-#endif
-#define USE_TASMOTA_DISCOVERY
-
-#ifdef ENABLE_RTSPSERVER
-  #undef ENABLE_RTSPSERVER
-#endif
-#define ENABLE_RTSPSERVER
-
-#ifdef USE_MI_ESP32
-  #undef USE_MI_ESP32
-#endif
-
-#ifdef USE_BLE_ESP32
-  #undef USE_BLE_ESP32
-#endif
-
-#ifdef CAMERA_MODEL_AI_THINKER
-  #undef CAMERA_MODEL_AI_THINKER
-#endif
-#define CAMERA_MODEL_AI_THINKER
 
 #ifdef MY_LANGUAGE
   #undef MY_LANGUAGE

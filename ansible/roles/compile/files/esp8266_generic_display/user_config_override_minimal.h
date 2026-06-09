@@ -4,19 +4,22 @@
 #ifdef CODE_IMAGE_STR
   #undef CODE_IMAGE_STR
 #endif
-#define CODE_IMAGE_STR "TasmoCompiler-esp32webcam"
+#define CODE_IMAGE_STR "TasmoCompiler-esp8266generic"
 
 #ifdef USE_DISPLAY
   #undef USE_DISPLAY
 #endif
+#define USE_DISPLAY
 
 #ifdef USE_UNIVERSAL_DISPLAY
   #undef USE_UNIVERSAL_DISPLAY
 #endif
+#define USE_UNIVERSAL_DISPLAY
 
 #ifdef USE_UNIVERSAL_TOUCH
   #undef USE_UNIVERSAL_TOUCH
 #endif
+#define USE_UNIVERSAL_TOUCH
 
 #ifdef USE_ENERGY_SENSOR
   #undef USE_ENERGY_SENSOR
@@ -106,32 +109,6 @@
   #undef USE_TASMOTA_CLIENT
 #endif
 
-#ifdef USE_BERRY
-  #undef USE_BERRY
-#endif
-#define USE_BERRY
-
-#ifdef USE_BERRY_PSRAM
-  #undef USE_BERRY_PSRAM
-#endif
-#define USE_BERRY_PSRAM
-
-#ifdef USE_BLE_ESP32
-  #undef USE_BLE_ESP32
-#endif
-
-#ifdef USE_MI_ESP32
-  #undef USE_MI_ESP32
-#endif
-
-#ifdef USE_EQ3_ESP32
-  #undef USE_EQ3_ESP32
-#endif
-
-#ifdef CONFIG_NIMBLE_CPP_IDF
-  #undef CONFIG_NIMBLE_CPP_IDF
-#endif
-
 #ifdef USE_ADC_VCC
   #undef USE_ADC_VCC
 #endif
@@ -139,42 +116,52 @@
 #ifdef USE_DISPLAY_TM1637
   #undef USE_DISPLAY_TM1637
 #endif
+#define USE_DISPLAY_TM1637
 
 #ifdef USE_DISPLAY_MAX7219
   #undef USE_DISPLAY_MAX7219
 #endif
+#define USE_DISPLAY_MAX7219
 
 #ifdef USE_DISPLAY_MODES1TO5
   #undef USE_DISPLAY_MODES1TO5
 #endif
+#define USE_DISPLAY_MODES1TO5
 
 #ifdef USE_DISPLAY_LCD
   #undef USE_DISPLAY_LCD
 #endif
+#define USE_DISPLAY_LCD
 
 #ifdef USE_DISPLAY_MATRIX
   #undef USE_DISPLAY_MATRIX
 #endif
+#define USE_DISPLAY_MATRIX
 
 #ifdef USE_DISPLAY_TM1650
   #undef USE_DISPLAY_TM1650
 #endif
+#define USE_DISPLAY_TM1650
 
 #ifdef USE_DISPLAY_EPAPER_29
   #undef USE_DISPLAY_EPAPER_29
 #endif
+#define USE_DISPLAY_EPAPER_29
 
 #ifdef USE_DISPLAY_EPAPER_42
   #undef USE_DISPLAY_EPAPER_42
 #endif
+#define USE_DISPLAY_EPAPER_42
 
 #ifdef USE_DISPLAY_RA8876
   #undef USE_DISPLAY_RA8876
 #endif
+#define USE_DISPLAY_RA8876
 
 #ifdef USE_DISPLAY_SEVENSEG
   #undef USE_DISPLAY_SEVENSEG
 #endif
+#define USE_DISPLAY_SEVENSEG
 
 #ifdef USE_SR04
   #undef USE_SR04
@@ -272,10 +259,6 @@
   #undef USE_ENERGY_DUMMY
 #endif
 
-#ifdef USE_ETHERNET
-  #undef USE_ETHERNET
-#endif
-
 #ifdef USE_HOME_ASSISTANT
   #undef USE_HOME_ASSISTANT
 #endif
@@ -283,6 +266,7 @@
 #ifdef USE_I2C
   #undef USE_I2C
 #endif
+#define USE_I2C
 
 #ifdef USE_MCP230xx
   #undef USE_MCP230xx
@@ -348,98 +332,6 @@
   #undef USE_VEML7700
 #endif
 
-#ifdef USE_LVGL
-  #undef USE_LVGL
-#endif
-
-#ifdef USE_MPU_ACCEL
-  #undef USE_MPU_ACCEL
-#endif
-
-#ifdef USE_RTC_CHIPS
-  #undef USE_RTC_CHIPS
-#endif
-
-#ifdef USE_BM8563
-  #undef USE_BM8563
-#endif
-
-#ifdef USE_XPT2046
-  #undef USE_XPT2046
-#endif
-
-#ifdef USE_FT5206
-  #undef USE_FT5206
-#endif
-
-#ifdef USE_GT911
-  #undef USE_GT911
-#endif
-
-#ifdef USE_CST816S
-  #undef USE_CST816S
-#endif
-
-#ifdef USE_DISPLAY_LVGL_ONLY
-  #undef USE_DISPLAY_LVGL_ONLY
-#endif
-
-#ifdef USE_ENHANCED_GUI_WIFI_SCAN
-  #undef USE_ENHANCED_GUI_WIFI_SCAN
-#endif
-
-#ifdef ROTARY_V1
-  #undef ROTARY_V1
-#endif
-
-#ifdef USE_BUZZER
-  #undef USE_BUZZER
-#endif
-
-#ifdef USE_LIGHT_PALETTE
-  #undef USE_LIGHT_PALETTE
-#endif
-
-#ifdef USE_SHELLY_PRO
-  #undef USE_SHELLY_PRO
-#endif
-
-#ifdef USE_SERIAL_BRIDGE
-  #undef USE_SERIAL_BRIDGE
-#endif
-
-#ifdef USE_MATTER_DEVICE
-  #undef USE_MATTER_DEVICE
-#endif
-
-#ifdef USE_BERRY_CRYPTO_EC_P256
-  #undef USE_BERRY_CRYPTO_EC_P256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_HMAC_SHA256
-  #undef USE_BERRY_CRYPTO_HMAC_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_HKDF_SHA256
-  #undef USE_BERRY_CRYPTO_HKDF_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_AES_CCM
-  #undef USE_BERRY_CRYPTO_AES_CCM
-#endif
-
-#ifdef USE_BERRY_CRYPTO_AES_CTR
-  #undef USE_BERRY_CRYPTO_AES_CTR
-#endif
-
-#ifdef USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
-  #undef USE_BERRY_CRYPTO_PBKDF2_HMAC_SHA256
-#endif
-
-#ifdef USE_BERRY_CRYPTO_SPAKE2P_MATTER
-  #undef USE_BERRY_CRYPTO_SPAKE2P_MATTER
-#endif
-
 #ifdef USE_DISCOVERY
   #undef USE_DISCOVERY
 #endif
@@ -482,22 +374,18 @@
 #ifdef USE_UFILESYS
   #undef USE_UFILESYS
 #endif
-#define USE_UFILESYS
 
 #ifdef USE_SDCARD
   #undef USE_SDCARD
 #endif
-#define USE_SDCARD
 
 #ifdef GUI_TRASH_FILE
   #undef GUI_TRASH_FILE
 #endif
-#define GUI_TRASH_FILE
 
 #ifdef GUI_EDIT_FILE
   #undef GUI_EDIT_FILE
 #endif
-#define GUI_EDIT_FILE
 
 #ifdef USE_SHUTTER
   #undef USE_SHUTTER
@@ -614,47 +502,77 @@
   #undef USE_WS2812
 #endif
 
-#ifdef USE_ZIGBEE
-  #undef USE_ZIGBEE
+#ifdef USE_LVGL
+  #undef USE_LVGL
 #endif
 
-#ifdef USE_WEBCAM
-  #undef USE_WEBCAM
-#endif
-#define USE_WEBCAM
-
-#ifdef USE_WEBCAM_V2
-  #undef USE_WEBCAM_V2
-#endif
-#define USE_WEBCAM_V2
-
-#ifdef USE_TASMOTA_DISCOVERY
-  #undef USE_TASMOTA_DISCOVERY
-#endif
-#define USE_TASMOTA_DISCOVERY
-
-#ifdef ENABLE_RTSPSERVER
-  #undef ENABLE_RTSPSERVER
-#endif
-#define ENABLE_RTSPSERVER
-
-#ifdef USE_MI_ESP32
-  #undef USE_MI_ESP32
+#ifdef USE_MPU_ACCEL
+  #undef USE_MPU_ACCEL
 #endif
 
-#ifdef USE_BLE_ESP32
-  #undef USE_BLE_ESP32
+#ifdef USE_RTC_CHIPS
+  #undef USE_RTC_CHIPS
 #endif
 
-#ifdef CAMERA_MODEL_AI_THINKER
-  #undef CAMERA_MODEL_AI_THINKER
+#ifdef USE_BM8563
+  #undef USE_BM8563
 #endif
-#define CAMERA_MODEL_AI_THINKER
+
+#ifdef USE_XPT2046
+  #undef USE_XPT2046
+#endif
+
+#ifdef USE_FT5206
+  #undef USE_FT5206
+#endif
+
+#ifdef USE_GT911
+  #undef USE_GT911
+#endif
+
+#ifdef USE_CST816S
+  #undef USE_CST816S
+#endif
+
+#ifdef USE_DISPLAY_LVGL_ONLY
+  #undef USE_DISPLAY_LVGL_ONLY
+#endif
+
+#ifdef USE_ENHANCED_GUI_WIFI_SCAN
+  #undef USE_ENHANCED_GUI_WIFI_SCAN
+#endif
+
+#ifdef ROTARY_V1
+  #undef ROTARY_V1
+#endif
+
+#ifdef USE_BUZZER
+  #undef USE_BUZZER
+#endif
+
+#ifdef USE_LIGHT_PALETTE
+  #undef USE_LIGHT_PALETTE
+#endif
+
+#ifdef USE_SHELLY_PRO
+  #undef USE_SHELLY_PRO
+#endif
+
+#ifdef USE_SERIAL_BRIDGE
+  #undef USE_SERIAL_BRIDGE
+#endif
 
 #ifdef MY_LANGUAGE
   #undef MY_LANGUAGE
 #endif
 #define MY_LANGUAGE	en_GB
 
-
+#define MTX_ADDRESS1     0x71              // [DisplayAddress1] I2C address of first 8x8 matrix module
+#define MTX_ADDRESS2     0x74              // [DisplayAddress2] I2C address of second 8x8 matrix module
+#define MTX_ADDRESS3     0x75              // [DisplayAddress3] I2C address of third 8x8 matrix module
+#define MTX_ADDRESS4     0x72              // [DisplayAddress4] I2C address of fourth 8x8 matrix module
+#define MTX_ADDRESS5     0x73              // [DisplayAddress5] I2C address of fifth 8x8 matrix module
+#define MTX_ADDRESS6     0x76              // [DisplayAddress6] I2C address of sixth 8x8 matrix module
+#define MTX_ADDRESS7     0x00              // [DisplayAddress7] I2C address of seventh 8x8 matrix module
+#define MTX_ADDRESS8     0x00              // [DisplayAddress8] I2C address of eigth 8x8 matrix module
 #endif

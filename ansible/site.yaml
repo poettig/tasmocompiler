@@ -6,15 +6,15 @@
     - name: Compile with one config
       ansible.builtin.include_role:
         name: compile
-      loop: "{{ ['esp8266_zigbee-bridge', 'esp32_webcam'] | product(['minimal']) | list }}"
+      loop: "{{ ['esp8266_generic_display','esp8266_zigbee-bridge', 'esp32_webcam', 'esp32_generic_display'] | product(['minimal']) | list }}"
 
     - name: Compile with two configs
       ansible.builtin.include_role:
         name: compile
-      loop: "{{ ['esp32_c3',
+      loop: "{{ ['esp32_c2',
+        'esp32_c3',
+        'esp32_c6',
         'esp32_generic',
-        'esp32_m5stackcore2',
-        'esp32_odroidgo',
         'esp32_s2',
         'esp32_s3',
         'esp32_solo1',
