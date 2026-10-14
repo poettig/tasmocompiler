@@ -1,4 +1,4 @@
-FROM node:20-slim as base
+FROM node:slim as base
 LABEL maintainer="Piotr Antczak <antczak.piotr@gmail.com>"
 
 ENV PATH="$PATH:/root/.local/bin"
@@ -14,7 +14,7 @@ RUN pipx install platformio
 
 
 
-FROM node:20-slim as build
+FROM node:slim as build
 
 ADD index.html vite.config.mjs package.json package-lock.json /tasmocompiler/
 ADD public /tasmocompiler/public/
@@ -23,15 +23,25 @@ RUN cd /tasmocompiler && npm ci && npm run build && rm -r node_modules
 
 
 
+FROM base as dev
+
+ENV NODE_ENV=development
+ADD package.json package-lock.json /tasmocompiler/
+ADD server /tasmocompiler/server/
+RUN cd /tasmocompiler && npm ci
+COPY --from=build /tasmocompiler/build /tasmocompiler/build/
+WORKDIR /tasmocompiler
+ENTRYPOINT ["node", "/tasmocompiler/server/app.js"]
+
+
+
+# Default Dockerfile build target is the last in the file
 FROM base as prod
 
 ENV NODE_ENV=production
-
 ADD package.json package-lock.json /tasmocompiler/
 ADD server /tasmocompiler/server/
 RUN cd /tasmocompiler && npm ci --omit=dev
-
 COPY --from=build /tasmocompiler/build /tasmocompiler/build/
-
 WORKDIR /tasmocompiler
 ENTRYPOINT ["node", "/tasmocompiler/server/app.js"]

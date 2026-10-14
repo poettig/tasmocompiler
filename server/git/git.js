@@ -1,4 +1,4 @@
-const git = require('simple-git');
+const { simpleGit } = require('simple-git');
 const fs = require('fs-extra');
 const _ = require('lodash');
 const debug = require('debug')('git');
@@ -25,7 +25,7 @@ const isGitRepoAvailable = async () => {
     return false; // directory does not exists
   }
 
-  const isRepo = await git(tasmotaRepo).checkIsRepo();
+  const isRepo = await simpleGit(tasmotaRepo).checkIsRepo();
   if (!isRepo) {
     // directory is not git repo, lets try to delete it
     debug(`${tasmotaRepo} is not git repo. Trying to delete it...`);
@@ -52,7 +52,7 @@ const getRepoTags = async () => {
       if (tcVersion.includes('dev')) {
         return [edgeBranch];
       }
-      const allTags = await git(tasmotaRepo).tags();
+      const allTags = await simpleGit(tasmotaRepo).tags();
       let tags = allTags.all.filter((t) => t.startsWith('v'));
       tags = tags.filter((t) => semver.valid(t));
       return [...tags];
@@ -70,19 +70,19 @@ const switchToBranch = async (branch) => {
   let notLocalBranches;
 
   try {
-    await git(tasmotaRepo).reset('hard');
+    await simpleGit(tasmotaRepo).reset('hard');
   } catch (e) {
     handleError('Unable to RESET repository', e);
   }
 
   try {
-    await git(tasmotaRepo).clean('dfx');
+    await simpleGit(tasmotaRepo).clean('dfx');
   } catch (e) {
     handleError('Unable to CLEAN repository', e);
   }
 
   try {
-    const summary = await git(tasmotaRepo).branchLocal();
+    const summary = await simpleGit(tasmotaRepo).branchLocal();
     const localBranches = Object.keys(summary.branches);
     notLocalBranches = _.difference(tags, localBranches);
   } catch (e) {
@@ -93,7 +93,7 @@ const switchToBranch = async (branch) => {
 
   if (_.indexOf(notLocalBranches, branch) > -1) {
     try {
-      await git(tasmotaRepo).checkoutBranch(branch, branch);
+      await simpleGit(tasmotaRepo).checkoutBranch(branch, branch);
       return branch;
     } catch (e) {
       throw new Error(`Switching to branch ${branch} failed`);
@@ -101,7 +101,7 @@ const switchToBranch = async (branch) => {
   }
 
   try {
-    await git(tasmotaRepo).checkout(branch);
+    await simpleGit(tasmotaRepo).checkout(branch);
     return branch;
   } catch (e) {
     throw new Error(`Switching to branch ${branch} failed`);
@@ -112,7 +112,7 @@ const cloneRepo = async () => {
   const isRepo = await isGitRepoAvailable();
   if (!isRepo) {
     try {
-      await git().clone(githubRepo, tasmotaRepo);
+      await simpleGit().clone(githubRepo, tasmotaRepo);
       debug('Repo cloned.');
     } catch (e) {
       handleError("Unable to CLONE git repository", e);
@@ -128,7 +128,7 @@ const pullRepo = async (refresh) => {
     await switchToBranch(edgeBranch);
 
     try {
-      await git(tasmotaRepo).pull();
+      await simpleGit(tasmotaRepo).pull();
       debug('Branch %s is now up to date.', edgeBranch);
     } catch (e) {
       handleError('Unable to PULL latest changes', e);
