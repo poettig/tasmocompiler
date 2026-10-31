@@ -7,7 +7,7 @@
     "@emotion/styled": "^11.14.0",
     "@mui/icons-material": "^6.4.3",
     "@mui/material": "^6.4.3",
-    "body-parser": "^2.3.0",
+    "body-parser": "^2.4.0",
     "debug": "^4.4.0",
     "express": "^5.2.1",
     "fs-extra": "^11.3.0",
