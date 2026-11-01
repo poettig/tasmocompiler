@@ -17,7 +17,6 @@ module.exports = {
   tasmotaRepo,
   githubRepo,
   minVersion,
-  maxVersion,
   edgeBranch,
   userConfigOvewrite,
   userPlatformioOverrideIni,

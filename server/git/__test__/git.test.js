@@ -5,7 +5,7 @@ const git = require('../git');
 const helpersMock = require('../../utils/helpers');
 jest.mock('../../utils/helpers');
 
-const { githubRepo, tasmotaRepo, minVersion, edgeBranch, maxVersion } = require('../../config/config');
+const { githubRepo, tasmotaRepo, minVersion, edgeBranch } = require('../../config/config');
 
 describe('git.js tests', () => {
   describe('testing isGitRepoAvailable', () => {
@@ -314,11 +314,11 @@ describe('git.js tests', () => {
       fsMock.stat.mockReturnValueOnce(Promise.reject()).mockReturnValueOnce(Promise.resolve());
       simpleGitMock.__setGitCloneReject(false);
       helpersMock.__setReturnVersion('100');
-      simpleGitMock.__setRepoTags([minVersion, maxVersion]);
+      simpleGitMock.__setRepoTags([minVersion]);
 
       const tags = await git.cloneRepo();
-      expect(tags).toHaveLength(2);
-      expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
+      expect(tags).toHaveLength(1);
+      expect(tags).toEqual(expect.arrayContaining([minVersion]));
       expect(simpleGitMock().clone).toHaveBeenCalledTimes(1);
       expect(simpleGitMock().clone).toHaveBeenCalledWith(githubRepo, tasmotaRepo);
     });
@@ -334,12 +334,12 @@ describe('git.js tests', () => {
       // first for isRepoAvailable at the start of pullRepo
       fsMock.stat.mockReturnValueOnce(Promise.reject());
       simpleGitMock.__setGitTagsReject(false);
-      simpleGitMock.__setRepoTags([minVersion, maxVersion]);
+      simpleGitMock.__setRepoTags([minVersion]);
       helpersMock.__setReturnVersion('100');
       const tags = await git.pullRepo();
 
-      expect(tags).toHaveLength(2);
-      expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
+      expect(tags).toHaveLength(1);
+      expect(tags).toEqual(expect.arrayContaining([minVersion]));
       expect(simpleGitMock().pull).toBeCalledTimes(0);
     });
 
@@ -360,11 +360,11 @@ describe('git.js tests', () => {
       fsMock.__setFsStatReject(false);
       simpleGitMock.__setGitPullReject(false);
       simpleGitMock.__setGitTagsReject(false);
-      simpleGitMock.__setRepoTags([minVersion, maxVersion]);
+      simpleGitMock.__setRepoTags([minVersion]);
       const tags = await git.pullRepo();
 
-      expect(tags).toHaveLength(2);
-      expect(tags).toEqual(expect.arrayContaining([minVersion, maxVersion]));
+      expect(tags).toHaveLength(1);
+      expect(tags).toEqual(expect.arrayContaining([minVersion]));
       expect(simpleGitMock().pull).toBeCalledTimes(1);
     });
   });
